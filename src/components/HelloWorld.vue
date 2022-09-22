@@ -1,58 +1,132 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div id="add-karyawan" class="container">
+    <h1>
+      PT Nganggur Indonesia Raya<br />
+      Absen karyawan
+    </h1>
+    <form v-if="!submitted">
+      <!-- Input text karyawan -->
+      <label>Nama Karyawan :</label>
+      <input type="text" v-model.lazy="karyawan.nama" required />
+      <!-- Input text deskripsi-->
+      <label>Deskripsi Karyawan :</label>
+      <textarea v-model.lazy="karyawan.deskripsi"></textarea>
+      <!-- Input checkbox Absen-->
+      <div id="checkboxes">
+        <h3>Pilih absen</h3>
+        <label>Sakit</label>
+        <input type="checkbox" value="sakit" v-model="karyawan.keterangan" />
+        <label>Ijin</label>
+        <input type="checkbox" value="Ijin" v-model="karyawan.keterangan" />
+        <label>Support lapangan</label>
+        <input type="checkbox" value="support" v-model="karyawan.keterangan" />
+
+        <label>Jumlah Absen</label>
+        <select v-model="karyawan.jumlahAbsen">
+          <option v-for="(jumlahAbsen, index) in jumlahAbsensi" :key="index">{{
+            jumlahAbsen
+          }}</option>
+        </select>
+      </div>
+      
+    </form>
+    <div v-if="submitted">
+      <h3>Terimakasih telah mengisi absen dan selamat menganggur</h3>
+    </div>
+    <div id="preview">
+      <h3>Preview Absen</h3>
+      <p>Nama karyawan : {{ karyawan.nama }}</p>
+      <p>Deskripsi Karyawan : {{ karyawan.deskripsi }}</p>
+      <p>Keterangan Absen :</p>
+      <ul>
+        <li v-for="(detail, index) in karyawan.keterangan" :key="index">{{ detail }}</li>
+      </ul>
+      <p>Jumlah absen : {{ karyawan.jumlahAbsen }}</p>
+    </div>
+    <button v-if="!submitted" v-on:click.prevent="post">Absen</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  data () {
+    return {
+      karyawan: {
+        nama: '',
+        deskripsi: '',
+        keterangan: [],
+        jumlahAbsen: ''
+      },
+      jumlahAbsensi: ['1 hari', '2 hari', '3 hari'],
+      submitted: false
+    }
+  },
+  methods: {
+    post: function () {
+      this.$http.post('http://jsonplaceholder.typicode.com/posts', {
+        title: this.karyawan.nama,
+        body: this.karyawan.deskripsi,
+        userId: 1
+      }).then(function (data) {
+        console.log(data)
+        this.submitted = true
+      })
+    }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#add-karyawan * {
+  box-sizing: border-box;
+}
+
+#add-karyawan {
+  margin: 20px auto;
+  max-width: 500px;
+}
+
+label {
+  display: block;
+  margin: 20px 0 10px;
+}
+
+input[type='text'],
+textarea {
+  display: block;
+  width: 100%;
+  padding: 8px;
+}
+
+#preview {
+  padding: 10px /* Padding right => */ 20px;
+  border: 1px /* Border menjadi titik" => */ dotted #ccc;
+  margin: /* jarak antara checkbox dan preview*/ 20px 0;
+}
+
 h3 {
-  margin: 40px 0 0;
+  margin-top: 10px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
+
+#checkboxes input {
   display: inline-block;
-  margin: 0 10px;
+  margin-right: 10px;
 }
-a {
-  color: #42b983;
+
+#checkboxes label {
+  /* inline-block membuat text menjadi horizontal */
+  display: inline-block;
+  margin-top: 1px;
+}
+
+button {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  display: block;
+}
+
+.jumlah-absen {
+  margin-top: 1px;
 }
 </style>
