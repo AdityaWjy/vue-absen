@@ -4,22 +4,31 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "start": "node server.js",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "node server.js"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
+    "@userfront/core": "^0.4.6",
+    "@userfront/vue": "^0.1.18",
+    "bootstrap": "^5.2.1",
     "core-js": "^3.8.3",
+    "express": "4.18.1",
+    "jquery": "^3.6.1",
+    "mdb-vue-ui-kit": "^3.0.0",
+    "popper.js": "^1.16.1",
+    "server-static": "2.0.5",
     "vue": "^2.6.14",
     "vue-resource": "^1.5.3",
-    "express": "4.18.1",
-    "server-static": "2.0.5"
+    "vue-router": "^3.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-router": "^5.0.8",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",

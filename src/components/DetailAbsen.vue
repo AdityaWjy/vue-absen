@@ -1,46 +1,43 @@
 <template>
-  <div v-theme:column="'narrow'" id="detail-absen" class="container">
-    <h1>Json typicode</h1>
-    <div v-for="(detail, index) in details" :key="index" class="data-absen">
-      <h2 v-rainbow>{{ detail.title | to-uppercase }}</h2>
-      <article>{{ detail.body | to-snippet}}</article>
-    </div>
+  <div class="container">
+    <table class="table">
+      <thead class="table-light">
+        <tr>
+          <th class="col">Nama</th>
+          <th class="col">Email</th>
+          <th class="col">Pekerjaan</th>
+          <th class="col">Keterangan</th>
+          <th class="col">Absen</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr v-for="absen in absensi" :key="absen.id">
+        <td> {{ absen.nama }}</td>
+        <td> {{ absen.email }}</td>
+        <td> {{ absen.pekerjaan }}</td>
+        <td> {{ absen.keterangan }}</td>
+        <td> {{ absen.Jumlahabsen }}</td>
+
+      </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
+  name: 'DetailAbsen',
+  data () {
     return {
-      details: [],
-    };
+      
+    }
   },
-  methods: {},
-
-  created() {
-    this.$http
-      .get("https://jsonplaceholder.typicode.com/posts")
-      .then(function (data) {
-        this.details = data.body.slice(0, 10);
-      });
-  },
-};
+  props: {
+    absensi: Array,
+  }
+}
 </script>
 
 <style scoped>
-#detail-absen {
-  max-width: 800px;
-  margin: 0 auto;
-}
 
-.data-absen {
-  padding: 20px;
-  margin: 20px 0;
-  box-sizing: border-box;
-  background: #eee;
-}
-
-h1 {
-  font-family: "Lucida Sans";
-}
 </style>

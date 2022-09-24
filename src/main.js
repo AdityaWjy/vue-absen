@@ -1,8 +1,13 @@
 import Vue from "vue";
 import App from "./App.vue";
 import VueResource from "vue-resource";
+import router from './router'
+import Userfront from '@userfront/vue';
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 Vue.use(VueResource);
+Userfront.init('demo1234')
 
 //Custom direvtive
 Vue.directive("rainbow", {
@@ -37,5 +42,6 @@ Vue.filter('to-snippet', function (value) {
 Vue.config.productionTip = false;
 
 new Vue({
-  render: (h) => h(App),
+  router,
+  render: (h) => h(App)
 }).$mount("#app");

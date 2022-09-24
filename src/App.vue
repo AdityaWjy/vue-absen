@@ -1,23 +1,19 @@
 <template>
-  <div id="app">  
-    <!-- <DetailAbsen></DetailAbsen> -->
-    <HelloWorld></HelloWorld>
+  <div id="app">
+    <router-view/>
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-// import DetailAbsen from './components/DetailAbsen.vue'
 
-export default {
-  name: 'App',
-  components: {
-   HelloWorld,
-    // DetailAbsen
-  }
+<script>
+export default{
+    data() {
+        return {};
+    }
+   
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
