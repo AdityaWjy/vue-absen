@@ -1,6 +1,6 @@
 <template>
 <div class="form-absen">
-<form>
+<form v-on:submit.prevent="submit">
     <div class="form-group">
         <label for="name">Nama</label>
         <input v-model="absen.nama"  type="text" class="form-control" placeholder="Masukkan nama pekerja">
@@ -8,7 +8,7 @@
 
     <div class="form-group">
         <label for="email">Email</label>
-        <input v-model="absen.nama"   type="email" class="form-control" placeholder="Masukkan email pekerja">
+        <input v-model="absen.email"   type="email" class="form-control" placeholder="Masukkan email pekerja">
     </div>
 
     <div class="form-group">
@@ -23,7 +23,7 @@
     
     <div class="form-group">
         <label for="Absen">Absen</label>
-        <input v-model="absen.absen"   type="text" class="form-control" placeholder="Masukkan jumlah absen">
+        <input v-model="absen.Jumlahabsen"   type="text" class="form-control" placeholder="Masukkan jumlah absen">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
@@ -41,7 +41,19 @@
                 email: '',
                 pekerjaan: '',
                 keterangan: '',
-                JumlahAbsen: '',
+                Jumlahabsen: '',
+                }
+            }
+        },
+        methods: {
+            submit () {
+                this.$emit('add-absen', this.absen)
+                this.absen = {
+                    nama : '',
+                    email: '',
+                    pekerjaan : '',
+                    keterangan : '',
+                    Jumlahabsen : '',
                 }
             }
         }

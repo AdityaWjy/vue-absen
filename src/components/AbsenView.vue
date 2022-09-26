@@ -5,21 +5,23 @@
       <hr />
       <p>
         <button
-          class="btn btn-primary"
+          class="btn btn-primary "
           type="button"
           @click.prevent="showForm = !showForm"
         >Tambah Absensi
       </button>
       </p>
 
-      <DetailAbsen :absensi="absensi" />
+      <DetailAbsen :absensi="absensi"
+      @edit-absen="editAbsen" 
+      @delete-absen="deleteAbsen"/>
 
       <div v-show="showForm">
         <div class="card card-body">
           <h2>Input Data Absen</h2>
           <hr>
 
-          <FormAbsen />
+          <FormAbsen @add-absen="tambahAbsen" />
 
         </div>
       </div>
@@ -37,24 +39,24 @@ export default {
       absensi: [
         {
           id: 1,
-          nama: "Bayu",
-          email: "Bayou@gmail.com",
-          pekerjaan: "Teknisi Air",
+          nama: "MrX",
+          email: "MrX@gmail.com",
+          pekerjaan: "Teknisi",
           keterangan: "Sakit",
           Jumlahabsen: "2 Hari",
         },
         {
           id: 2,
-          nama: "Saitan",
-          email: "Saitan@gmail.com",
-          pekerjaan: "Tukang",
+          nama: "MsW",
+          email: "MsW@gmail.com",
+          pekerjaan: "Sales",
           keterangan: "Ijin",
           Jumlahabsen: "1 Hari",
         },
         {
           id: 3,
-          nama: "Lucy",
-          email: "Luucyyy@gmail.com",
+          nama: "MrZ",
+          email: "Zedd@gmail.com",
           pekerjaan: "MC",
           keterangan: "Support",
           Jumlahabsen: "2 Hari",
@@ -66,6 +68,24 @@ export default {
     DetailAbsen,
     FormAbsen
 },
+
+  methods : {
+    tambahAbsen(absen) {
+      this.absensi.push(absen);
+    },
+
+    editAbsen(id,data) {
+      this.absensi = this.absensi.map(function(absen) {
+        return absen.id === id ? data : absen;
+      });
+    },
+
+    deleteAbsen(id) {
+      this.absensi = this.absensi.filter(function(absen) {
+        return absen.id !== id;
+      });
+    }
+  }
 };
 </script>
 
@@ -81,5 +101,9 @@ h3 {
 #absen-view {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  margin-left: 11px;
 }
 </style>
